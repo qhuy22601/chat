@@ -39,16 +39,37 @@ module.exports.register = async (req, res, next) => {
   }
 };
 
+// module.exports.getAllUsers = async (req, res, next) => {
+//   try {
+//     const users = await User.find({ _id: { $ne: req.params.id } }).select([
+//       "email",
+//       "lastName",
+//       "firstName",
+//       "image",
+//       "id",
+//     ]);
+//     return res.json(users);
+//   } catch (ex) {
+//     next(ex);
+//   }
+// };
+
+
 module.exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.find({ _id: { $ne: req.params.id } }).select([
-      "email",
-      "lastName",
-      "firstName",
-      "image",
-      "id",
-    ]);
-    return res.json(users);
+    const users = await User.find({ _id: { $ne: req.params.id } })
+      .select([
+        "email",
+        "lastName",
+        "firstName",
+        "image",
+        "id",
+        "unreadMessages",
+        "lastMessageSent",
+      ])
+      .sort({ lastMessageSent: -1 });
+
+    res.json(users);
   } catch (ex) {
     next(ex);
   }

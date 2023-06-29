@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-
   username: {
     type: String,
     required: true,
@@ -9,14 +8,14 @@ const userSchema = new mongoose.Schema({
     max: 20,
     unique: true,
   },
-  firstName:{
-    type:String,
+  firstName: {
+    type: String,
     // required: true,
     min: 3,
     max: 20,
   },
-  lastName:{
-    type:String,
+  lastName: {
+    type: String,
     // required: true,
     min: 3,
     max: 20,
@@ -40,9 +39,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  avata:{
+  avata: {
     type: String,
     default: "",
+  },
+  unreadMessages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Messages",
+    },
+  ],
+  lastMessageSent: {
+    type: Date,
+    default: null,
   },
 });
 
